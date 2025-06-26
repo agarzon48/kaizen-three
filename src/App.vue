@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import SceneCanvas from './components/SceneCanvas.vue'
 </script>
 
 <template>
-  <h1>Hi!</h1>
+  <SceneCanvas />
 </template>
 
 <style scoped></style>
