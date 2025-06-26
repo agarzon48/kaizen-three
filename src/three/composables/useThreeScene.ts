@@ -10,7 +10,7 @@ export function useThreeScene(container: HTMLElement) {
     scene.add(camera)
 
     const renderer = new THREE.WebGLRenderer({ canvas: container, antialias: true })
-    renderer.setSize(800, 600)
+    renderer.setSize(container.clientWidth, container.clientHeight)
 
     createSceneObjects(scene)
 
