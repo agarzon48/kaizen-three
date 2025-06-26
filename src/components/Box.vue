@@ -115,7 +115,6 @@ onUnmounted(() => {
     if (mesh && three.scene) {
         three.scene.remove(mesh)
         mesh.geometry.dispose()
-        mesh.material.dispose()
     }
     window.removeEventListener('mousemove', updateMouse)
     window.removeEventListener('click', handleClick)

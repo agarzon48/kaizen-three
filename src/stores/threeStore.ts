@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import * as THREE from 'three'
+import { toRaw } from 'vue'
 
 import type { BoxState, SphereState, ConeState } from '@/domain/geometries'
-import { DEFAULT_BOX_STATE, DEFAULT_CONE_STATE, DEFAULT_SPHERE_STATE } from '@/utils/contants'
+import { typeDefaultsMap } from '@/utils/contants'
 
+export type GeometryType = 'box' | 'sphere' | 'cone'
 
 export const useThreeStore = defineStore('three', {
     state: () => ({
@@ -35,17 +37,10 @@ export const useThreeStore = defineStore('three', {
             this.raycaster = raycaster
         },
 
-        registerGeometry(id: string, initial?: Partial<BoxState | SphereState | ConeState>) {
-            let defaults: BoxState | SphereState | ConeState
+        registerGeometry(type: GeometryType, initial?: Partial<BoxState | SphereState | ConeState>) {
+            const id = globalThis.crypto.randomUUID()
 
-            if (initial && 'radius' in initial && 'height' in initial) {
-                defaults = { ...DEFAULT_CONE_STATE }
-            } else if (initial && 'radius' in initial) {
-                defaults = { ...DEFAULT_SPHERE_STATE }
-            } else {
-                defaults = { ...DEFAULT_BOX_STATE }
-            }
-
+            const defaults = typeDefaultsMap[type] || {}
             const fullState = { ...defaults, ...initial }
 
             if (!this.geometries[id]) {
@@ -56,7 +51,8 @@ export const useThreeStore = defineStore('three', {
 
         resetGeometry(id: string) {
             if (this.initialGeometries[id]) {
-                this.geometries[id] = structuredClone(this.initialGeometries[id])
+                const initialState = toRaw(this.initialGeometries[id])
+                this.geometries[id] = structuredClone(initialState)
             }
         },
 

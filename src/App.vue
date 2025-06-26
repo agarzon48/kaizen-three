@@ -9,7 +9,7 @@ const three = useThreeStore()
 const selectedGeometry = ref<string | null>(null)
 
 onMounted(() => {
-  three.registerGeometry('box1', {
+  three.registerGeometry('box', {
     position: { x: 0, y: 0, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
     rotationSpeed: 0.01,
@@ -18,7 +18,7 @@ onMounted(() => {
     name: 'box1'
   })
 
-  three.registerGeometry('box2', {
+  three.registerGeometry('box', {
     position: { x: 3, y: 0, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
     scale: { x: 1, y: 1, z: 1 },
@@ -27,7 +27,7 @@ onMounted(() => {
     name: 'box2'
   })
 
-  three.registerGeometry('box3', {
+  three.registerGeometry('box', {
     position: { x: -3, y: 0, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
     rotationSpeed: 0.05,
