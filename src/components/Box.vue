@@ -14,8 +14,8 @@ const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
 
 const props = defineProps<{ id: string }>()
 const emit = defineEmits<{
-    (e: 'hover', value: boolean): void
-    (e: 'click'): void
+    (e: 'hover', id: string): void
+    (e: 'click', id: string): void
 }>()
 const box = computed(() => three.geometries[props.id])
 
@@ -93,10 +93,7 @@ function handleClick() {
     three.raycaster.setFromCamera(three.mouse, three.camera)
     const intersects = three.raycaster.intersectObject(mesh)
     if (intersects.length > 0) {
-        emit('click')
-
-        const newColor = Math.floor(Math.random() * 0xffffff)
-        box.value.color = newColor
+        emit('click', props.id)
     }
 }
 

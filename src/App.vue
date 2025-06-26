@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import SceneCanvas from './components/SceneCanvas.vue'
 import Box from './components/Box.vue'
+import Hud from './components/Hud.vue'
 import { useThreeStore } from './stores/threeStore'
 
 const three = useThreeStore()
+const selectedGeometry = ref<string | null>(null)
 
 onMounted(() => {
   three.registerGeometry('box1', {
@@ -40,6 +42,14 @@ const handleHover = (id: string) => {
   three.updateGeometry(id, { color: Math.floor(Math.random() * 0xffffff) })
 }
 
+const handleClick = (id: string) => {
+  if (selectedGeometry.value === id) {
+    selectedGeometry.value = null
+    return
+  }
+  selectedGeometry.value = id
+}
+
 </script>
 
 <template>
@@ -47,6 +57,7 @@ const handleHover = (id: string) => {
     <SceneCanvas />
 
     <Box v-for="(geometry, id) in three.geometries" :key="id" :id="id" @hover="handleHover"
-      @click="() => console.log(`click [${id}]`)" />
+      @click="handleClick" />
+      <Hud v-if="selectedGeometry" :id="selectedGeometry" />
   </div>
 </template>
