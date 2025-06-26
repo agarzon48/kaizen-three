@@ -2,6 +2,8 @@ import * as THREE from 'three'
 
 import { useThreeStore } from '@/stores/threeStore'
 
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
 export function useAnimationLoop({
     renderer,
     scene,
@@ -12,6 +14,10 @@ export function useAnimationLoop({
     camera: THREE.Camera
 }) {
     const store = useThreeStore()
+    const controls = new OrbitControls( camera, renderer.domElement );
+    controls.update();
+
+
 
     let animationFrameId: number
 
@@ -25,7 +31,7 @@ export function useAnimationLoop({
             ) {
                 const geometry = store.geometries[object.name]
                 const speed = geometry.rotationSpeed ?? 0
-
+                
                 object.rotation.x += speed / 2
                 object.rotation.y += speed
 
@@ -34,7 +40,8 @@ export function useAnimationLoop({
                 geometry.rotation.z = object.rotation.z
             }
         })
-
+        
+        controls.update();
         renderer.render(scene, camera)
     }
 

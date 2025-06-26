@@ -34,5 +34,5 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <canvas ref="container"></canvas>
+    <canvas ref="container" width="800" height="600"></canvas>
 </template>
