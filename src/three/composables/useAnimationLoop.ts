@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 
+import { useThreeStore } from '@/stores/threeStore'
+
 export function useAnimationLoop({
     renderer,
     scene,
@@ -9,6 +11,7 @@ export function useAnimationLoop({
     scene: THREE.Scene
     camera: THREE.Camera
 }) {
+    const store = useThreeStore()
 
     let animationFrameId: number
 
@@ -16,14 +19,22 @@ export function useAnimationLoop({
         animationFrameId = requestAnimationFrame(animate)
         scene.traverse((object) => {
             if (
-                object instanceof THREE.Mesh
+                object instanceof THREE.Mesh &&
+                object.name &&
+                store.geometries[object.name]
             ) {
+                const geometry = store.geometries[object.name]
+                const speed = geometry.rotationSpeed ?? 0
 
-                object.rotation.x += 0.02
-                object.rotation.y += 0.02
+                object.rotation.x += speed / 2
+                object.rotation.y += speed
 
+                geometry.rotation.x = object.rotation.x
+                geometry.rotation.y = object.rotation.y
+                geometry.rotation.z = object.rotation.z
             }
         })
+
         renderer.render(scene, camera)
     }
 
