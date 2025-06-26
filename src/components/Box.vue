@@ -3,6 +3,15 @@ import * as THREE from 'three'
 import { computed, watchEffect, onMounted, onUnmounted, watch } from 'vue'
 import { useThreeStore } from '@/stores/threeStore'
 
+const textureLoader = new THREE.TextureLoader()
+const colorTexture = textureLoader.load('/textures/door/color.jpg')
+const occlusionTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg')
+const alphaTexture = textureLoader.load('/textures/door/alpha.jpg')
+const heightTexture = textureLoader.load('/textures/door/height.jpg')
+const normalTexture = textureLoader.load('/textures/door/normal.jpg')
+const metalnessTexture = textureLoader.load('/textures/door/metalness.jpg')
+const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
+
 const props = defineProps<{ id: string }>()
 const emit = defineEmits<{
     (e: 'hover', value: boolean): void
@@ -21,7 +30,15 @@ watchEffect(() => {
 
     const geometry = new THREE.BoxGeometry()
     const material = new THREE.MeshStandardMaterial({
-        color: boxState.value.color,
+        map: colorTexture,
+        aoMap: occlusionTexture,
+        alphaMap: alphaTexture,
+        displacementMap: heightTexture,
+        displacementScale: 0.1,
+        normalMap: normalTexture,
+        metalnessMap: metalnessTexture,
+        roughnessMap: roughnessTexture,
+        transparent: true
     })
     mesh = new THREE.Mesh(geometry, material)
     mesh.name = props.id
@@ -67,8 +84,6 @@ function checkIntersections() {
     if (hovering !== isHovered) {
         isHovered = hovering
         emit('hover', props.id)
-        // emit('hover', hovering)
-        // three.updateGeometry(props.id, { color: Math.floor(Math.random() * 0xffffff) })
     }
 }
 

@@ -12,7 +12,6 @@ onMounted(() => {
     rotation: { x: 0, y: 0, z: 0 },
     rotationSpeed: 0.01,
     scale: { x: 1, y: 1, z: 1 },
-    color: 0x00ff00,
     visible: true,
     name: 'box1'
   })
@@ -22,7 +21,6 @@ onMounted(() => {
     rotation: { x: 0, y: 0, z: 0 },
     scale: { x: 1, y: 1, z: 1 },
     rotationSpeed: 0,
-    color: 0xff0000,
     visible: true,
     name: 'box2'
   })
