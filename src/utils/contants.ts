@@ -35,3 +35,9 @@ export const DEFAULT_CONE_STATE: ConeState = {
   height: 2,
   radialSegments: 32,
 }
+
+export const typeDefaultsMap: Record<string, BoxState | SphereState | ConeState> = {
+  box: DEFAULT_BOX_STATE,
+  sphere: DEFAULT_SPHERE_STATE,
+  cone: DEFAULT_CONE_STATE,
+}
