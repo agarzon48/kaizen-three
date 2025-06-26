@@ -1,12 +1,5 @@
 import * as THREE from 'three'
 
-const textureLoader = new THREE.TextureLoader()
-const occlusionTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg', (texture) => {
-    texture.wrapS = THREE.RepeatWrapping
-    texture.wrapT = THREE.RepeatWrapping
-    texture.repeat.set(4, 4)
-})
-
 export type GeometryType = 'box' | 'sphere' | 'cone'
 
 export interface GeometryOptions {
@@ -22,10 +15,8 @@ export class GeometryFactory {
 
         let geometry: THREE.BufferGeometry
         const material = new THREE.MeshStandardMaterial({ 
-            map:occlusionTexture
+            color
          })
-
-         console.log(111, occlusionTexture)
 
         switch (type) {
             case 'box':
