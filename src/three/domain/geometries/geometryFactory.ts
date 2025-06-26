@@ -14,7 +14,9 @@ export class GeometryFactory {
         const { type, color = 0x00ff00, size = 1, position = { x: 0, y: 0, z: 0 } } = options
 
         let geometry: THREE.BufferGeometry
-        const material = new THREE.MeshStandardMaterial({ color })
+        const material = new THREE.MeshStandardMaterial({ 
+            color
+         })
 
         switch (type) {
             case 'box':
